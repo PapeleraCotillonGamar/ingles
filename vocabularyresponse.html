@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Trivia Inglés C1-C2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- RESPONSIVE -->
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    #game {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-size: 1.8rem; /* relativo */
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 1.2rem; /* relativo */
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .options button:hover {
+      opacity: 0.9;
+    }
+    #timer {
+      font-size: 1.3rem;
+      margin: 10px;
+      color: #444;
+    }
+    #example {
+      margin-top: 15px;
+      font-style: italic;
+      color: #333;
+      font-size: 1rem;
+    }
+
+    /* --- Estilos específicos para pantallas pequeñas --- */
+    @media (max-width: 768px) {
+      #game {
+        padding: 15px;
+      }
+      .question {
+        font-size: 2rem; /* más grande en celular */
+      }
+      .options button {
+        font-size: 1.5rem;
+        padding: 16px;
+      }
+      #timer {
+        font-size: 1.5rem;
+      }
+      #example {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* --- Pantallas muy pequeñas (celulares chicos) --- */
+    @media (max-width: 480px) {
+      .question {
+        font-size: 2.2rem;
+      }
+      .options button {
+        font-size: 1.6rem;
+        padding: 18px;
+      }
+      #timer {
+        font-size: 1.6rem;
+      }
+      #example {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div id="timer">Tiempo: 10</div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="example"></div>
+  </div>
+
+  <script>
+    // --- Preguntas con ejemplos ---
+   const questions = [
+     { word: "Aberration", options: ["Descanso", "Desviación", "Comodidad", "Mejora"], correct: "Desviación", example: "The sudden drop in temperature was an aberration for this season." },
+  { word: "Acumen", options: ["Decoración", "Velocidad", "Perspicacia", "Enfermedad"], correct: "Perspicacia", example: "Her business acumen helped the company succeed." },
+  { word: "Adulation", options: ["Castigo", "Adulación", "Discusión", "Adivinanza"], correct: "Adulación", example: "The actor enjoyed the adulation of his fans." },
+  { word: "Alacrity", options: ["Tristeza", "Maldad", "Confusión", "Entusiasmo"], correct: "Entusiasmo", example: "She accepted the invitation with alacrity." },
+  { word: "Ambivalent", options: ["Amistoso", "Indeciso", "Claro", "Generoso"], correct: "Indeciso", example: "He felt ambivalent about moving to a new city." },
+  { word: "Anachronism", options: ["Viaje", "Error de época", "Amuleto", "Filosofía"], correct: "Error de época", example: "The sword in the modern movie was an anachronism." },
+  { word: "Apathy", options: ["Alegría", "Indiferencia", "Felicidad", "Fuerza"], correct: "Indiferencia", example: "Voter apathy can affect election results." },
+  { word: "Auspicious", options: ["Oscuro", "Peligroso", "Falso", "Prometedor"], correct: "Prometedor", example: "The sunny weather was an auspicious start to the festival." },
+  { word: "Belligerent", options: ["Paciente", "Agresivo", "Elegante", "Feliz"], correct: "Agresivo", example: "His belligerent attitude caused many arguments." },
+  { word: "Benevolent", options: ["Bondadoso", "Cansado", "Frágil", "Fuerte"], correct: "Bondadoso", example: "The benevolent donor helped build the school." },
+
+  { word: "Bolster", options: ["Romper", "Apoyar", "Esconder", "Criticar"], correct: "Apoyar", example: "The evidence will bolster his argument." },
+  { word: "Cajole", options: ["Escapar", "Conducir", "Engatusar", "Proteger"], correct: "Engatusar", example: "She tried to cajole him into joining the team." },
+  { word: "Candor", options: ["Oscuridad", "Franqueza", "Orgullo", "Maldad"], correct: "Franqueza", example: "He spoke with candor about his mistakes." },
+  { word: "Capricious", options: ["Cálido", "Ordenado", "Caprichoso", "Valiente"], correct: "Caprichoso", example: "The weather here is capricious and unpredictable." },
+  { word: "Censure", options: ["Reír", "Estudiar", "Reprender", "Aprobar"], correct: "Reprender", example: "The senator was censured for his inappropriate comments." },
+  { word: "Clandestine", options: ["Costoso", "Secreto", "Rápido", "Natural"], correct: "Secreto", example: "They held a clandestine meeting in the basement." },
+  { word: "Coerce", options: ["Pintar", "Obligar", "Bailar", "Cortar"], correct: "Obligar", example: "He tried to coerce his friend into lying." },
+  { word: "Complacent", options: ["Conformista", "Agresivo", "Creativo", "Activo"], correct: "Conformista", example: "We must not become complacent about safety." },
+  { word: "Concur", options: ["Coincidir", "Olvidar", "Reír", "Dudar"], correct: "Coincidir", example: "I concur with your point of view." },
+  { word: "Condone", options: ["Negar", "Tolerar", "Aplaudir", "Gritar"], correct: "Tolerar", example: "The school cannot condone bullying." },
+
+  { word: "Conundrum", options: ["Dolor", "Enigma", "Viaje", "Fiesta"], correct: "Enigma", example: "The riddle presented a real conundrum." },
+  { word: "Copious", options: ["Pequeño", "Raro", "Abundante", "Oscuro"], correct: "Abundante", example: "He took copious notes during the lecture." },
+  { word: "Credible", options: ["Elegante", "Creíble", "Terrible", "Lento"], correct: "Creíble", example: "The witness provided a credible account of the event." },
+  { word: "Cryptic", options: ["Simpático", "Enigmático", "Ruidoso", "Brillante"], correct: "Enigmático", example: "Her message was brief and cryptic." },
+  { word: "Cursory", options: ["Superficial", "Perfecto", "Lento", "Preciso"], correct: "Superficial", example: "He gave a cursory glance at the report." },
+  { word: "Daunting", options: ["Cómodo", "Intimidante", "Brillante", "Feliz"], correct: "Intimidante", example: "Climbing the mountain seemed daunting at first." },
+  { word: "Debilitate", options: ["Reparar", "Debilitar", "Sonar", "Ganar"], correct: "Debilitar", example: "The illness will debilitate him for weeks." },
+  { word: "Deleterious", options: ["Hermoso", "Pequeño", "Dañino", "Dulce"], correct: "Dañino", example: "Smoking has deleterious effects on health." },
+  { word: "Demure", options: ["Famoso", "Pesado", "Modesto", "Enojado"], correct: "Modesto", example: "She gave a demure smile at the compliment." },
+  { word: "Denounce", options: ["Mejorar", "Denunciar", "Inventar", "Confiar"], correct: "Denunciar", example: "They denounced the illegal activities publicly." },
+
+  { word: "Digress", options: ["Dormir", "Viajar", "Desviarse", "Escribir"], correct: "Desviarse", example: "The speaker digressed from the main topic." },
+  { word: "Diligent", options: ["Perezoso", "Curioso", "Aplicado", "Tranquilo"], correct: "Aplicado", example: "She is diligent in her studies." },
+  { word: "Disdain", options: ["Desdén", "Esperanza", "Cariño", "Alegría"], correct: "Desdén", example: "He looked at the messy room with disdain." },
+  { word: "Disparage", options: ["Construir", "Menospreciar", "Festejar", "Apoyar"], correct: "Menospreciar", example: "Critics disparaged the new movie unfairly." },
+  { word: "Dispel", options: ["Dormir", "Disipar", "Atrapar", "Esconder"], correct: "Disipar", example: "The bright sunlight helped dispel the fog." },
+  { word: "Disseminate", options: ["Recoger", "Ocultar", "Difundir", "Esconder"], correct: "Difundir", example: "The organization aims to disseminate information about health." },
+  { word: "Dogmatic", options: ["Amable", "Autoritario", "Flexible", "Dudoso"], correct: "Autoritario", example: "He is too dogmatic to accept other opinions." },
+  { word: "Dubious", options: ["Seguro", "Claro", "Dudoso", "Cierto"], correct: "Dudoso", example: "I am dubious about the accuracy of this report." },
+  { word: "Ebullient", options: ["Débil", "Tranquilo", "Entusiasta", "Oscuro"], correct: "Entusiasta", example: "The ebullient crowd cheered for the performers." },
+  { word: "Egregious", options: ["Atroz", "Divertido", "Rápido", "Lindo"], correct: "Atroz", example: "His mistake was an egregious error." },
+
+  { word: "Elated", options: ["Sano", "Hambriento", "Ocupado", "Eufórico"], correct: "Eufórico", example: "She was elated when she heard the good news." },
+  { word: "Eloquent", options: ["Elocuente", "Ruidoso", "Torpe", "Silencioso"], correct: "Elocuente", example: "He gave an eloquent speech at the ceremony." },
+  { word: "Emulate", options: ["Escapar", "Imitar", "Rechazar", "Ignorar"], correct: "Imitar", example: "Young athletes often emulate their heroes." },
+  { word: "Enigmatic", options: ["Aburrido", "Misterioso", "Cómico", "Vulgar"], correct: "Misterioso", example: "The artist left an enigmatic message in the painting." },
+  { word: "Ephemeral", options: ["Grande", "Eterno", "Efímero", "Valioso"], correct: "Efímero", example: "Trends in fashion are ephemeral." },
+  { word: "Eradicate", options: ["Construir", "Crear", "Erradicar", "Mover"], correct: "Erradicar", example: "The goal is to eradicate poverty." },
+  { word: "Esoteric", options: ["Popular", "Esotérico", "Evidente", "Común"], correct: "Esotérico", example: "The book contains esoteric knowledge." },
+  { word: "Eulogy", options: ["Burla", "Crítica", "Elogio", "Rechazo"], correct: "Elogio", example: "He delivered a touching eulogy at the funeral." },
+  { word: "Exacerbate", options: ["Olvidar", "Empeorar", "Alegrar", "Mejorar"], correct: "Empeorar", example: "The new policy may exacerbate economic problems." },
+  { word: "Exemplary", options: ["Triste", "Terrible", "Confuso", "Ejemplar"], correct: "Ejemplar", example: "Her dedication is exemplary." }
+    ];
+
+    let currentIndex = 0;
+    let timer;
+    let timeLeft = 10;
+
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+    const timerElement = document.getElementById("timer");
+    const exampleElement = document.getElementById("example");
+
+    // --- Síntesis de voz con callback ---
+    function speakText(text, lang = "en-US", callback = null) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      if (callback) utterance.onend = callback;
+      speechSynthesis.speak(utterance);
+    }
+
+    function showQuestion() {
+      clearInterval(timer);
+      timeLeft = 10;
+      timerElement.textContent = "Tiempo: " + timeLeft;
+      timer = setInterval(updateTimer, 1000);
+
+      const currentQuestion = questions[currentIndex];
+      questionElement.textContent = `¿Qué significa "${currentQuestion.word}"?`;
+      exampleElement.textContent = "";
+
+      optionsElement.innerHTML = "";
+      currentQuestion.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.addEventListener("click", function() {
+          speakText(currentQuestion.word);
+          if (option === currentQuestion.correct) {
+            button.style.backgroundColor = "green";
+            exampleElement.textContent = currentQuestion.example;
+            speakText(currentQuestion.example, "en-US", () => nextQuestion());
+          } else {
+            button.style.backgroundColor = "red";
+            setTimeout(nextQuestion, 1500);
+          }
+          clearInterval(timer);
+        });
+        optionsElement.appendChild(button);
+      });
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      timerElement.textContent = "Tiempo: " + timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        nextQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        showQuestion();
+      } else {
+        questionElement.textContent = "¡Juego terminado!";
+        optionsElement.innerHTML = "";
+        timerElement.textContent = "";
+        exampleElement.textContent = "";
+      }
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
