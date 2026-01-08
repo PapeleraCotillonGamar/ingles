@@ -11,9 +11,8 @@ body {
 }
 
 .app {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
 }
 
 /* Top bar */
