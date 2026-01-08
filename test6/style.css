@@ -5,7 +5,7 @@
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
-    background: url("/ingles/test6/assets/background.png") no-repeat center center fixed;
+    background: url("/ingles/test6/assets/background.png") no-repeat center center;
     background-size: cover;
     min-height: 100vh;
 }
