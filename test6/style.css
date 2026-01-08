@@ -5,7 +5,7 @@
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
-    background: url("/test6/assets/background.png") no-repeat center center fixed;
+    background: url("/ingles/test6/assets/background.png") no-repeat center center fixed;
     background-size: cover;
     min-height: 100vh;
 }
@@ -41,7 +41,7 @@ body {
 
 .question-box {
     width: 100%;
-    background: url("/test6/assets/pregunta.png") no-repeat center;
+    background: url("/ingles/test6/assets/pregunta.png") no-repeat center;
     background-size: contain;
     padding: 40px 30px;
     min-height: 120px;
@@ -65,7 +65,7 @@ body {
 
 .answer-btn {
     width: 100%;
-    background: url("/test6/assets/botonSimple.png") no-repeat center;
+    background: url("/ingles/test6/assets/botonSimple.png") no-repeat center;
     background-size: contain;
     border: none;
     padding: 18px;
