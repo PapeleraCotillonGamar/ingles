@@ -16,11 +16,10 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    background: url("/ingles/test6/assets/background.png") no-repeat center top;
+    background-image: url("/ingles/test6/assets/background.png");
+    background-repeat: no-repeat;
+    background-position: top center;
     background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
 }
 
 /* CONTENEDOR PRINCIPAL */
@@ -146,4 +145,14 @@ body {
 .answers h3 {
     color: #1d3557;
     margin: 8px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: transparent !important;
+    }
+
+    img, button, div {
+        filter: none !important;
+    }
 }
