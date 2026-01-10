@@ -2,15 +2,13 @@
     color-scheme: light;
 }
 
-html {
-    background-color: #ffffff;
-}
-
-
-
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", Arial, sans-serif;
+}
+
+html {
+    background-color: #ffffff;
 }
 
 body {
@@ -20,6 +18,9 @@ body {
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 /* CONTENEDOR PRINCIPAL */
@@ -31,17 +32,26 @@ body {
 
 /* BARRA SUPERIOR */
 .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: linear-gradient(#8fb7e8, #6fa0d8);
     color: white;
-    padding: 12px 16px;
-    border-radius: 14px;
-    margin-bottom: 16px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 18px;
 }
 
-.mode,
+.mode {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+}
+
 .score {
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: right;
 }
 
 /* CONTENEDOR DE PREGUNTA */
@@ -125,7 +135,6 @@ body {
     border-radius: 20px;
     color: white;
     z-index: 10;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .feedback.right {
@@ -147,6 +156,7 @@ body {
     margin: 8px 0;
 }
 
+/* BLOQUEAR DARK MODE FORZADO */
 @media (prefers-color-scheme: dark) {
     body {
         background-color: transparent !important;
