@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>B1B2-1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#8fb7e8">
+
+    <link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+
+<div class="app">
+    <header class="top-bar">
+        <div class="mode">Voz Pasiva</div>
+        <div class="score">Puntuación: <span id="score">0</span></div>
+    </header>
+
+    <div class="question-container">
+        <div class="question-box">
+            <p id="question"></p>
+        </div>
+
+        <div id="answers" class="answers"></div>
+    </div>
+</div>
+
+<div id="feedback" class="feedback hidden"></div>
+
+<script src="./questions.js"></script>
+<script src="../shared/app.js"></script>
+</body>
+</html>
